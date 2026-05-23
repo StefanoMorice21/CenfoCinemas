@@ -1,4 +1,4 @@
-﻿namespace Entities_DTOs
+﻿namespace SqlDao
 {
     public class Class1
     {
