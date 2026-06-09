@@ -1,0 +1,16 @@
+USE [cenfocinemas-db];
+GO
+
+CREATE TABLE tblMovies (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Created DATETIME NOT NULL DEFAULT GETDATE(),
+    Updated DATETIME NULL,
+
+    Title NVARCHAR(255) NOT NULL,
+    Sinopsis NVARCHAR(MAX) NOT NULL,
+    Genre NVARCHAR(100) NOT NULL,
+    Duration INT NOT NULL,
+    Clasification NVARCHAR(50) NOT NULL,
+    Image NVARCHAR(500) NOT NULL,
+    Status NVARCHAR(50) NOT NULL
+);

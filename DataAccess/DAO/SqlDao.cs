@@ -23,7 +23,7 @@ namespace DataAccess.DAO
         //Paso 2: Redefinir el constructor default de la clase
         private SqlDao()
         {
-            connectionString = string.Empty;
+            connectionString = @"Data Source=TETO5D0D;Initial Catalog=cenfocinemas-db;Integrated Security=True;Trust Server Certificate=True";
         }
 
         //Paso 3: Definir un metodo estatico que expone la instancia
@@ -36,7 +36,7 @@ namespace DataAccess.DAO
         }
 
         //Metodo que ejcuta store procedures a partir de la especificacion recibida por parametro
-        public void ExecuteProcuedure(Operation sqlOperation)
+        public void ExecuteProcedure(Operation sqlOperation)
         {
             using  (var connection = new SqlConnection(connectionString))
             {

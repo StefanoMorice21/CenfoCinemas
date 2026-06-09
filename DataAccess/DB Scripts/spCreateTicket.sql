@@ -1,0 +1,36 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE CRE_TICKET_PR
+	@P_PRICE FLOAT,
+	@P_SCHEDULE DATETIME,
+	@P_DATE DATETIME,
+	@P_TYPE NVARCHAR(50),
+	@P_MOVIE_ID INT
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	INSERT INTO dbo.tblTickets
+	(
+		Created,
+		Price,
+		Schedule,
+		Date,
+		Type,
+		MovieId
+	)
+	VALUES
+	(
+		GETDATE(),
+		@P_PRICE,
+		@P_SCHEDULE,
+		@P_DATE,
+		@P_TYPE,
+		@P_MOVIE_ID
+	);
+END
+GO
