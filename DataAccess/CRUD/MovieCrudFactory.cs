@@ -28,7 +28,13 @@ namespace DataAccess.CRUD
 
         public override void Delete(BaseDTO baseDTO)
         {
-            throw new NotImplementedException();
+            var movie = baseDTO as Movie;
+
+            var sqlOperation = new Operation();
+            sqlOperation.ProcedureName = "DEL_MOVIE_PR";
+            sqlOperation.AddIntParameter("P_ID", movie.Id);
+
+            sqlDao.ExecuteProcedure(sqlOperation);
         }
 
         public override List<T> RetrieveAll<T>()
