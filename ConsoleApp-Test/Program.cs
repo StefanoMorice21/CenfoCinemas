@@ -1,14 +1,15 @@
 ﻿
 
+using DataAccess.CRUD;
 using DataAccess.DAO;
+using Entities_DTOs;
 
 public class Program
 {
     public static void Main(string[] args)
     {
 
-        var sqlDao = SqlDao.getInstance();
-        var sqlOperation = new Operation();
+        
 
         Console.WriteLine("Indique un Codigo de Usuario: ");
         var userCode = Console.ReadLine();
@@ -30,18 +31,18 @@ public class Program
         Console.WriteLine("Ingrese su Numero de Telefono: ");
         var phone = int.Parse(Console.ReadLine());
 
+        var userDTO = new User();
+        userDTO.UserCode = userCode;
+        userDTO.Name = name;
+        userDTO.Email = email;
+        userDTO.Password = password;
+        userDTO.BirthDate = birthday;
+        userDTO.Status = status;
+        userDTO.PhoneNumber = phone;
+
+        var uCrud = new UserCrudFactory();
+        uCrud.Create(userDTO);
 
 
-        sqlOperation.ProcedureName = "CRE_USER_PR";
-
-        sqlOperation.AddStringParameter("P_USER_CODE", userCode);
-        sqlOperation.AddStringParameter("P_NAME", name);
-        sqlOperation.AddStringParameter("P_EMAIL", email);
-        sqlOperation.AddStringParameter("P_PASSWORD", password);
-        sqlOperation.AddDateTimeParameter("P_BIRTH_DATE", birthday);
-        sqlOperation.AddIntParameter("P_PHONE_NUMBER", phone);
-        sqlOperation.AddStringParameter("P_STATUS", status);
-
-        sqlDao.ExecuteProcedure(sqlOperation);
     }
 }

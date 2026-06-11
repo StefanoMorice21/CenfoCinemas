@@ -27,7 +27,7 @@ namespace DataAccess.DAO
         }
 
         //Paso 3: Definir un metodo estatico que expone la instancia
-        public static SqlDao getInstance() {
+        public static SqlDao GetInstance() {
             if(instance == null)
             {
                 instance = new SqlDao();

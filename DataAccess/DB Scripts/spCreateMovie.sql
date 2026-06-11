@@ -1,4 +1,4 @@
-﻿USE [cenfocinemas-db]
+USE [cenfocinemas-db]
 GO
 /****** Objeto: StoredProcedure [dbo].[CRE_MOVIE_PR] Fecha de script: 6/9/2026 3:03:33 PM ******/
 SET ANSI_NULLS ON
