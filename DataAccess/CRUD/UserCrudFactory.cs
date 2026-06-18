@@ -26,8 +26,8 @@ namespace DataAccess.CRUD
             sqlOperation.AddStringParameter("P_NAME", user.Name);
             sqlOperation.AddStringParameter("P_EMAIL", user.Email);
             sqlOperation.AddStringParameter("P_PASSWORD", user.Password);
-            sqlOperation.AddDateTimeParameter("P_BIRTH_DATE", user.BirthDate);
-            sqlOperation.AddIntParameter("P_PHONE_NUMBER", user.PhoneNumber);
+            sqlOperation.AddDateTimeParameter("P_BIRTH_DATE", user.Birthday);
+            sqlOperation.AddIntParameter("P_PHONE_NUMBER", user.Phone);
             sqlOperation.AddStringParameter("P_STATUS", user.Status);
 
             //Ejecutamos el SP
@@ -45,19 +45,64 @@ namespace DataAccess.CRUD
             sqlDao.ExecuteProcedure(sqlOperation);
         }
 
+
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var lstUsers = new List<T>();
+            var operation = new Operation();
+            operation.ProcedureName = "RET_ALL_USER_PR";
+            var lstResults = sqlDao.ExecuteQueryProcedure(operation);
+            if(lstResults.Count > 0)
+            { 
+                foreach(var result in lstResults)
+                {
+                    var user = BuildUser(result);
+                    lstUsers.Add((T)Convert.ChangeType(user,typeof(T)));
+                }
+            }
+            return lstUsers;
         }
 
         public override T RetrieveById<T>(int id)
         {
-            throw new NotImplementedException();
+            var operation = new Operation();
+            operation.ProcedureName = "RET_USER_BY_ID_PR";
+            operation.AddIntParameter("P_ID", id);
+
+            var lstResults = sqlDao.ExecuteQueryProcedure(operation);
+
+            if (lstResults.Count > 0)
+            {
+                var user = BuildUser(lstResults[0]);
+
+                return (T)Convert.ChangeType(user, typeof(T));
+            }
+
+            return default(T);
         }
 
         public override void Update(BaseDTO baseDTO)
         {
             throw new NotImplementedException();
         } 
+
+        //Metodo que construye el DTO del usuario a partir de la data que viene en la consulta de la BD
+        private User BuildUser(Dictionary<string, object> row)
+        {
+            var user = new User()
+            {
+                Id = (int)row["Id"],
+                Created = (DateTime)row["Created"],
+                UserCode = (string)row["UserCode"],
+                Name = (string)row["Name"],
+                Email = (string)row["Email"],
+                Password = (string)row["Password"],
+                Status = (string)row["Status"],
+                Birthday = (DateTime)row["Birthday"],
+                Phone = (int)row["Phone"],
+            };
+            return user;
+
+        }
     }
 }

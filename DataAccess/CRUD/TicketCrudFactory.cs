@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DataAccess.CRUD
 {
-    internal class TicketCrudFactory : CrudFactory
+    public class TicketCrudFactory : CrudFactory
     {
         public TicketCrudFactory()
         {
@@ -22,6 +22,7 @@ namespace DataAccess.CRUD
             sqlOperation.AddDateTimeParameter("DATE", ticket.Date);
             sqlOperation.AddStringParameter("TYPE", ticket.Type);
             sqlOperation.AddIntParameter("MOVIE_ID", ticket.MovieId);
+            sqlDao.ExecuteProcedure(sqlOperation);
         }
 
         public override void Delete(BaseDTO baseDTO)
@@ -37,17 +38,59 @@ namespace DataAccess.CRUD
 
         public override List<T> RetrieveAll<T>()
         {
-            throw new NotImplementedException();
+            var lstTickets = new List<T>();
+            var operation = new Operation();
+            operation.ProcedureName = "RET_ALL_TICKETS_PR";
+            var lstResults = sqlDao.ExecuteQueryProcedure(operation);
+            if (lstResults.Count > 0)
+            {
+                foreach (var result in lstResults)
+                {
+                    var ticket = BuildTicket(result);
+                    lstTickets.Add((T)Convert.ChangeType(ticket, typeof(T)));
+                }
+            }
+            return lstTickets;
         }
 
         public override T RetrieveById<T>(int id)
         {
-            throw new NotImplementedException();
+            var operation = new Operation();
+            operation.ProcedureName = "RET_TICKET_BY_ID_PR";
+            operation.AddIntParameter("P_ID", id);
+
+            var lstResults = sqlDao.ExecuteQueryProcedure(operation);
+
+            if (lstResults.Count > 0)
+            {
+                var row = lstResults[0];
+                var ticket = BuildTicket(row);
+
+                return (T)Convert.ChangeType(ticket, typeof(T));
+            }
+            return default(T);
         }
 
         public override void Update(BaseDTO baseDTO)
         {
             throw new NotImplementedException();
+        }
+
+        private Ticket BuildTicket(Dictionary<string, object> row)
+        {
+            var ticket = new Ticket()
+            {
+                Id = (int)row["Id"],
+                Created = (DateTime)row["Created"],
+                Price = (double)row["Price"],
+                Schedule = (DateTime)row["Schedule"],
+                Date = (DateTime)row["Date"],
+                Type = (string)row["Type"],
+                MovieId = (int)row["MovieId"]
+         
+            };
+            return ticket;
+
         }
     }
 }

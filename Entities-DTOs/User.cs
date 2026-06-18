@@ -10,9 +10,9 @@ namespace Entities_DTOs
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password {  get; set; }
-        public DateTime BirthDate { get; set; }
+        public DateTime Birthday { get; set; }
         public string Status { get; set; }
-        public int PhoneNumber {  get; set; }
+        public int Phone {  get; set; }
 
     }
 }
