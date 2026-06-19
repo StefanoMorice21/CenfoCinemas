@@ -17,11 +17,11 @@ namespace DataAccess.CRUD
             var ticket = baseDTO as Ticket;
             var sqlOperation = new Operation();
             sqlOperation.ProcedureName = "CRE_TICKET_PR";
-            sqlOperation.AddDoubleParameter("PRICE", ticket.Price);
-            sqlOperation.AddDateTimeParameter("SCHEDULE", ticket.Schedule);
-            sqlOperation.AddDateTimeParameter("DATE", ticket.Date);
-            sqlOperation.AddStringParameter("TYPE", ticket.Type);
-            sqlOperation.AddIntParameter("MOVIE_ID", ticket.MovieId);
+            sqlOperation.AddDoubleParameter("P_PRICE", ticket.Price);
+            sqlOperation.AddDateTimeParameter("P_SCHEDULE", ticket.Schedule);
+            sqlOperation.AddDateTimeParameter("P_DATE", ticket.Date);
+            sqlOperation.AddStringParameter("P_TYPE", ticket.Type);
+            sqlOperation.AddIntParameter("P_MOVIE_ID", ticket.MovieId);
             sqlDao.ExecuteProcedure(sqlOperation);
         }
 
