@@ -26,6 +26,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveById")]
+        public ActionResult RetrieveById(int id)
+        {
+            try
+            {
+                var um = new UserManager();
+                var user = um.RetrieveUserById(id);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(User user)
@@ -37,6 +53,38 @@ namespace WebApi.Controllers
                 return Ok(user);
             }
             catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public ActionResult Update(User user)
+        {
+            try
+            {
+                var um = new UserManager();
+                um.UpdateUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public ActionResult Delete(User user)
+        {
+            try
+            {
+                var um = new UserManager();
+                um.DeleteUser(user);
+                return Ok(user);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }

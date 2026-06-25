@@ -24,6 +24,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveById")]
+        public ActionResult RetrieveById(int id)
+        {
+            try
+            {
+                var tm = new TicketManager();
+                var ticket = tm.RetrieveTicketById(id);
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(Ticket ticket)
@@ -32,6 +48,38 @@ namespace WebApi.Controllers
             {
                 var tm = new TicketManager();
                 tm.CreateTicket(ticket);
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public ActionResult Update(Ticket ticket)
+        {
+            try
+            {
+                var tm = new TicketManager();
+                tm.UpdateTicket(ticket);
+                return Ok(ticket);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public ActionResult Delete(Ticket ticket)
+        {
+            try
+            {
+                var tm = new TicketManager();
+                tm.DeleteTicket(ticket);
                 return Ok(ticket);
             }
             catch (Exception ex)

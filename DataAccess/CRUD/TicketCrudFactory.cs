@@ -17,11 +17,13 @@ namespace DataAccess.CRUD
             var ticket = baseDTO as Ticket;
             var sqlOperation = new Operation();
             sqlOperation.ProcedureName = "CRE_TICKET_PR";
-            sqlOperation.AddDoubleParameter("P_PRICE", ticket.Price);
-            sqlOperation.AddDateTimeParameter("P_SCHEDULE", ticket.Schedule);
-            sqlOperation.AddDateTimeParameter("P_DATE", ticket.Date);
-            sqlOperation.AddStringParameter("P_TYPE", ticket.Type);
+            sqlOperation.AddStringParameter("P_TICKET_CODE", ticket.TicketCode);
             sqlOperation.AddIntParameter("P_MOVIE_ID", ticket.MovieId);
+            sqlOperation.AddIntParameter("P_USER_ID", ticket.UserId);
+            sqlOperation.AddDateTimeParameter("P_SHOW_DATE_TIME", ticket.ShowDateTime);
+            sqlOperation.AddStringParameter("P_SEAT_NUMBER", ticket.SeatNumber);
+            sqlOperation.AddDoubleParameter("P_PRICE", ticket.Price);
+            sqlOperation.AddStringParameter("P_STATUS", ticket.Status);
             sqlDao.ExecuteProcedure(sqlOperation);
         }
 
@@ -73,7 +75,18 @@ namespace DataAccess.CRUD
 
         public override void Update(BaseDTO baseDTO)
         {
-            throw new NotImplementedException();
+            var ticket = baseDTO as Ticket;
+            var sqlOperation = new Operation();
+            sqlOperation.ProcedureName = "UPD_TICKET_PR";
+            sqlOperation.AddIntParameter("P_ID", ticket.Id);
+            sqlOperation.AddStringParameter("P_TICKET_CODE", ticket.TicketCode);
+            sqlOperation.AddIntParameter("P_MOVIE_ID", ticket.MovieId);
+            sqlOperation.AddIntParameter("P_USER_ID", ticket.UserId);
+            sqlOperation.AddDateTimeParameter("P_SHOW_DATE_TIME", ticket.ShowDateTime);
+            sqlOperation.AddStringParameter("P_SEAT_NUMBER", ticket.SeatNumber);
+            sqlOperation.AddDoubleParameter("P_PRICE", ticket.Price);
+            sqlOperation.AddStringParameter("P_STATUS", ticket.Status);
+            sqlDao.ExecuteProcedure(sqlOperation);
         }
 
         private Ticket BuildTicket(Dictionary<string, object> row)
@@ -82,12 +95,13 @@ namespace DataAccess.CRUD
             {
                 Id = (int)row["Id"],
                 Created = (DateTime)row["Created"],
+                TicketCode = (string)row["TicketCode"],
+                MovieId = (int)row["MovieId"],
+                UserId = (int)row["UserId"],
+                ShowDateTime = (DateTime)row["ShowDateTime"],
+                SeatNumber = (string)row["SeatNumber"],
                 Price = (double)row["Price"],
-                Schedule = (DateTime)row["Schedule"],
-                Date = (DateTime)row["Date"],
-                Type = (string)row["Type"],
-                MovieId = (int)row["MovieId"]
-         
+                Status = (string)row["Status"]
             };
             return ticket;
 

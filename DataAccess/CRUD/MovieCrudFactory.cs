@@ -77,7 +77,18 @@ namespace DataAccess.CRUD
 
         public override void Update(BaseDTO baseDTO)
         {
-            throw new NotImplementedException();
+            var movie = baseDTO as Movie;
+            var sqlOperation = new Operation();
+            sqlOperation.ProcedureName = "UPD_MOVIE_PR";
+            sqlOperation.AddIntParameter("P_ID", movie.Id);
+            sqlOperation.AddStringParameter("P_TITLE", movie.Title);
+            sqlOperation.AddStringParameter("P_SINOPSIS", movie.Sinopsis);
+            sqlOperation.AddStringParameter("P_GENRE", movie.Genre);
+            sqlOperation.AddIntParameter("P_DURATION", movie.Duration);
+            sqlOperation.AddStringParameter("P_CLASIFICATION", movie.Clasification);
+            sqlOperation.AddStringParameter("P_IMAGE", movie.Image);
+            sqlOperation.AddStringParameter("P_STATUS", movie.Status);
+            sqlDao.ExecuteProcedure(sqlOperation);
         }
 
         private Movie BuildMovie(Dictionary<string, object> row)

@@ -83,8 +83,19 @@ namespace DataAccess.CRUD
 
         public override void Update(BaseDTO baseDTO)
         {
-            throw new NotImplementedException();
-        } 
+            var user = baseDTO as User;
+            var sqlOperation = new Operation();
+            sqlOperation.ProcedureName = "UPD_USER_PR";
+            sqlOperation.AddIntParameter("P_ID", user.Id);
+            sqlOperation.AddStringParameter("P_USER_CODE", user.UserCode);
+            sqlOperation.AddStringParameter("P_NAME", user.Name);
+            sqlOperation.AddStringParameter("P_EMAIL", user.Email);
+            sqlOperation.AddStringParameter("P_PASSWORD", user.Password);
+            sqlOperation.AddDateTimeParameter("P_BIRTH_DATE", user.Birthday);
+            sqlOperation.AddIntParameter("P_PHONE_NUMBER", user.Phone);
+            sqlOperation.AddStringParameter("P_STATUS", user.Status);
+            sqlDao.ExecuteProcedure(sqlOperation);
+        }
 
         //Metodo que construye el DTO del usuario a partir de la data que viene en la consulta de la BD
         private User BuildUser(Dictionary<string, object> row)

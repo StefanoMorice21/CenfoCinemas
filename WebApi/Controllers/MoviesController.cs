@@ -24,6 +24,22 @@ namespace WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("RetrieveById")]
+        public ActionResult RetrieveById(int id)
+        {
+            try
+            {
+                var mm = new MovieManager();
+                var movie = mm.RetrieveMovieById(id);
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(Movie movie)
@@ -32,6 +48,38 @@ namespace WebApi.Controllers
             {
                 var mm = new MovieManager();
                 mm.CreateMovie(movie);
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPut]
+        [Route("Update")]
+        public ActionResult Update(Movie movie)
+        {
+            try
+            {
+                var mm = new MovieManager();
+                mm.UpdateMovie(movie);
+                return Ok(movie);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("Delete")]
+        public ActionResult Delete(Movie movie)
+        {
+            try
+            {
+                var mm = new MovieManager();
+                mm.DeleteMovie(movie);
                 return Ok(movie);
             }
             catch (Exception ex)
